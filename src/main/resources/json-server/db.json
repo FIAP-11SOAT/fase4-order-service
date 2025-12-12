@@ -1,0 +1,235 @@
+{
+    "categories": [
+        {
+            "id": "11111111-1111-1111-1111-111111111111",
+            "name": "Lanches"
+        },
+        {
+            "id": "22222222-2222-2222-2222-222222222222",
+            "name": "Bebidas"
+        },
+        {
+            "id": "33333333-3333-3333-3333-333333333333",
+            "name": "Sobremesas"
+        },
+        {
+            "id": "44444444-4444-4444-4444-444444444444",
+            "name": "Pratos"
+        },
+        {
+            "id": "55555555-5555-5555-5555-555555555555",
+            "name": "Acompanhamentos"
+        }
+    ],
+    "products": [
+        {
+            "id": "a1f0c9d7-7c5e-4f06-9b91-51a8bd5e8dc1",
+            "name": "Hambúrguer Clássico",
+            "description": "Pão, carne 150g, queijo e maionese.",
+            "price": 22.90,
+            "image_url": "https://picsum.photos/200?1",
+            "preparation_time": 15,
+            "category_id": "11111111-1111-1111-1111-111111111111",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "b72bd7bd-2b53-4df6-b773-f6fb1c3c9c82",
+            "name": "Hambúrguer Duplo",
+            "description": "Dois hambúrgueres de 150g, queijo e molho especial.",
+            "price": 32.50,
+            "image_url": "https://picsum.photos/200?2",
+            "preparation_time": 20,
+            "category_id": "11111111-1111-1111-1111-111111111111",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "c393c309-0779-43e9-9e44-712f6b32b8d8",
+            "name": "Refrigerante Cola 350ml",
+            "description": "Bebida gelada.",
+            "price": 6.00,
+            "image_url": "https://picsum.photos/200?3",
+            "preparation_time": 0,
+            "category_id": "22222222-2222-2222-2222-222222222222",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "d238e4d3-7001-4ed7-9a6f-8f69fbd73ab9",
+            "name": "Suco Natural de Laranja",
+            "description": "Feito na hora.",
+            "price": 12.00,
+            "image_url": "https://picsum.photos/200?4",
+            "preparation_time": 2,
+            "category_id": "22222222-2222-2222-2222-222222222222",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "e4ed21cd-59f8-415f-9f34-0e43982c8dcb",
+            "name": "Batata Frita P",
+            "description": "Porção pequena.",
+            "price": 10.00,
+            "image_url": "https://picsum.photos/200?5",
+            "preparation_time": 10,
+            "category_id": "55555555-5555-5555-5555-555555555555",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "f108a73e-8a11-46ee-a1ab-2ffc37c508d1",
+            "name": "Batata Frita G",
+            "description": "Porção grande.",
+            "price": 16.00,
+            "image_url": "https://picsum.photos/200?6",
+            "preparation_time": 10,
+            "category_id": "55555555-5555-5555-5555-555555555555",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "aa299b7b-9ea4-41f4-9750-4b6b0987c548",
+            "name": "Milkshake Chocolate",
+            "description": "Milkshake 500ml sabor chocolate.",
+            "price": 18.90,
+            "image_url": "https://picsum.photos/200?7",
+            "preparation_time": 5,
+            "category_id": "33333333-3333-3333-3333-333333333333",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "12bb5349-119c-4de0-a734-98e0b28a0297",
+            "name": "Milkshake Morango",
+            "description": "Milkshake 500ml sabor morango.",
+            "price": 18.90,
+            "image_url": "https://picsum.photos/200?8",
+            "preparation_time": 5,
+            "category_id": "33333333-3333-3333-3333-333333333333",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "5c5d5c52-e33a-4b41-a704-6f51b52c0574",
+            "name": "Café Expresso",
+            "description": "30ml de café puro.",
+            "price": 5.00,
+            "image_url": "https://picsum.photos/200?9",
+            "preparation_time": 1,
+            "category_id": "22222222-2222-2222-2222-222222222222",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "66cc32f7-1a9a-4a5f-aa25-39de63eacafb",
+            "name": "Cachorro-Quente",
+            "description": "Pão, salsicha, batata palha e molhos.",
+            "price": 14.00,
+            "image_url": "https://picsum.photos/200?10",
+            "preparation_time": 10,
+            "category_id": "11111111-1111-1111-1111-111111111111",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "70950f4a-5b9a-4a24-aa41-4af48f83b342",
+            "name": "Salada Caesar",
+            "description": "Alface, frango grelhado, molho caesar e croutons.",
+            "price": 25.90,
+            "image_url": "https://picsum.photos/200?11",
+            "preparation_time": 8,
+            "category_id": "44444444-4444-4444-4444-444444444444",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "813cb7e1-40de-4aea-b8a9-4f4077ee9dce",
+            "name": "Prato Executivo Frango",
+            "description": "Arroz, feijão, frango e salada.",
+            "price": 28.00,
+            "image_url": "https://picsum.photos/200?12",
+            "preparation_time": 20,
+            "category_id": "44444444-4444-4444-4444-444444444444",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "9f53da12-6024-49fb-8b10-1cfb67e94cc6",
+            "name": "Prato Executivo Carne",
+            "description": "Arroz, feijão, carne e salada.",
+            "price": 32.00,
+            "image_url": "https://picsum.photos/200?13",
+            "preparation_time": 25,
+            "category_id": "44444444-4444-4444-4444-444444444444",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "ab61c40b-9467-433c-b5c6-4f9c7550bcb0",
+            "name": "Sorvete de Creme",
+            "description": "Bola de sorvete tradicional.",
+            "price": 7.00,
+            "image_url": "https://picsum.photos/200?14",
+            "preparation_time": 0,
+            "category_id": "33333333-3333-3333-3333-333333333333",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "bd612c1a-0d44-4fb4-bd2e-d8446c6f2df6",
+            "name": "Brownie",
+            "description": "Brownie de chocolate.",
+            "price": 9.50,
+            "image_url": "https://picsum.photos/200?15",
+            "preparation_time": 2,
+            "category_id": "33333333-3333-3333-3333-333333333333",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "c7d63b49-a2cf-4c35-a3bd-36f78bc1bc77",
+            "name": "Panqueca de Carne",
+            "description": "Panqueca recheada com carne moída.",
+            "price": 22.00,
+            "image_url": "https://picsum.photos/200?16",
+            "preparation_time": 15,
+            "category_id": "44444444-4444-4444-4444-444444444444",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "de19df53-df32-495a-b3b8-2f3d3fceb382",
+            "name": "Panqueca de Frango",
+            "description": "Panqueca recheada com frango.",
+            "price": 20.00,
+            "image_url": "https://picsum.photos/200?17",
+            "preparation_time": 15,
+            "category_id": "44444444-4444-4444-4444-444444444444",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "ef4ee8df-3b39-4c83-94c4-318c513888b0",
+            "name": "Água Mineral 500ml",
+            "description": "Água mineral sem gás.",
+            "price": 4.50,
+            "image_url": "https://picsum.photos/200?18",
+            "preparation_time": 0,
+            "category_id": "22222222-2222-2222-2222-222222222222",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        },
+        {
+            "id": "fa37b396-8f74-4f1c-96ab-8f5d39de4f6c",
+            "name": "Torta de Limão",
+            "description": "Fatia de torta de limão.",
+            "price": 11.00,
+            "image_url": "https://picsum.photos/200?19",
+            "preparation_time": 3,
+            "category_id": "33333333-3333-3333-3333-333333333333",
+            "created_at": "2025-01-01T12:00:00Z",
+            "updated_at": "2025-01-01T12:00:00Z"
+        }
+    ]
+}

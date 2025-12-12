@@ -1,0 +1,13 @@
+package com.fiap.soat11.order.entity;
+
+public enum OrderStatusEvent {
+    ORDER_CREATED,
+    AWAITING_PAYMENT,
+    PAYMENT_APPROVED,
+    PAYMENT_FAILED,
+    AWAITING_PREPARATION,
+    PREPARATION_IN_PROGRESS,
+    FOR_DELIVERY,
+    DELIVERED,
+    CANCELLED
+}
