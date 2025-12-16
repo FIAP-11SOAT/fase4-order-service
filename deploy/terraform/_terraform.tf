@@ -19,5 +19,16 @@ terraform {
       version = "~> 3.7.2"
     }
 
+    postgresql = {
+      source = "cyrilgdn/postgresql"
+      version = "~> 1.26.0"
+    }
+
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
+
   }
+
 }

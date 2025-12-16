@@ -14,11 +14,11 @@ on:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Install Flyway
         run: |
           curl -L https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/11.19.0/flyway-commandline-11.19.0-linux-x64.tar.gz | tar xvz
-          sudo ln -s $PWD/flyway-10.8.1/flyway /usr/local/bin/flyway
+          sudo ln -s $PWD/flyway-11.19.0/flyway /usr/local/bin/flyway
       - name: Run Flyway Migrations
         env:
           FLYWAY_URL: jdbc:mysql://your-host:3306/your_database

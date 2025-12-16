@@ -9,7 +9,7 @@ stop:
 restart: stop start
 
 migrate:
-	flyway migrate
+	flyway -configFiles=flyway.developer.conf migrate
 
 catalog-service:
 	npx json-server --watch src/main/resources/json-server/db.json --port 3000
