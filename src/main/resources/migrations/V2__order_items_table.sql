@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS order_items (
     product_name varchar(150),
     price numeric(12, 2) NOT NULL CHECK (price >= 0),
     quantity int NOT NULL CHECK (quantity > 0),
+    
     created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

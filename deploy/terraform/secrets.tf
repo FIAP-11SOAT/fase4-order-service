@@ -14,5 +14,6 @@ resource "aws_secretsmanager_secret_version" "secrets" {
     "spring.datasource.url"      = "jdbc:postgresql://localhost:5432/default",
     "spring.datasource.username" = "default",
     "spring.datasource.password" = "default",
+    "spring.datasource.driver-class-name" = "org.postgresql.Driver"
   })
 }
