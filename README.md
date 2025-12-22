@@ -21,14 +21,14 @@ on:
           sudo ln -s $PWD/flyway-11.19.0/flyway /usr/local/bin/flyway
       - name: Run Flyway Migrations
         env:
-          FLYWAY_URL: jdbc:mysql://your-host:3306/your_database
-          FLYWAY_USER: ${{ secrets.DB_USER }}
-          FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          FLYWAY_URL: ${{ secrets.DATABASE_URL }}
+          FLYWAY_USER: ${{ secrets.DATABASE_USER }}
+          FLYWAY_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         run: |
           flyway -url=$FLYWAY_URL \
                  -user=$FLYWAY_USER \
                  -password=$FLYWAY_PASSWORD \
-                 -locations=filesystem:./db/sql \
+                 -locations=filesystem:src/main/resources/migrations \
                  migrate
 ```
 
