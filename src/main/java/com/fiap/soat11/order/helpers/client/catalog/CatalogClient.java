@@ -23,7 +23,7 @@ public class CatalogClient {
 
     public CatalogClient(
         RestTemplate restTemplate, 
-        @Value("${fase4.order.service.client.catalog.url}") String baseUrl
+        @Value("${fase4.order.service.apigateway.url}") String baseUrl
     ) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
