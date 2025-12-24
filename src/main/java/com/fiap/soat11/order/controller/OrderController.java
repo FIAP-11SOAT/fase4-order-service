@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fiap.soat11.order.decorators.HasAnyRole;
 import com.fiap.soat11.order.dto.CreateOrderRequest;
 import com.fiap.soat11.order.entity.Order;
 import com.fiap.soat11.order.entity.OrderItem;
@@ -38,13 +37,13 @@ public class OrderController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('CUSTOMERS')")
+    @HasAnyRole(roles = { "CUSTOMERS", "EMPLOYEES", "SERVICES" })
     public List<Order> orders() {
         return orderRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('CUSTOMERS')")
+    @HasAnyRole(roles = { "CUSTOMERS", "EMPLOYEES", "SERVICES" })
     public Order getOrderById(
         @PathVariable UUID id
     ) {
@@ -57,7 +56,7 @@ public class OrderController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('CUSTOMERS')")
+    @HasAnyRole(roles = { "CUSTOMERS", "EMPLOYEES", "SERVICES" })
     public Order createOrder(
         @RequestBody List<CreateOrderRequest> request,
         @AuthenticationPrincipal Jwt jwt

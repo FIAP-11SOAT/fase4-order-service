@@ -15,7 +15,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 
 @Configuration
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
     private final JwtDecoder jwtDecoder;
