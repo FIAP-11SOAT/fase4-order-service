@@ -4,7 +4,8 @@
 name: Flyway Migration
 on:
   push:
-    branches: [ main ]jobs:
+    branches: [ main ]
+  jobs:
   migrate:
     runs-on: ubuntu-latest
     steps:

@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "event_id": "evt-005",
+    "event_type": "2025-12-24T10:30:00Z",
+    "event_source": "production-service",
+    "event_target": "order-service",
+    "event_name": "production-completed-event"
+  },
+  "payload": {
+    "order_id": "7f000101-9b50-15b7-819b-50f5d2090000"
+  }
+}

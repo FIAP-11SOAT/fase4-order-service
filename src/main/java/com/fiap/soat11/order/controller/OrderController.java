@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +38,13 @@ public class OrderController {
     }
 
     @GetMapping
-    // @PreAuthorize("hasRole('CUSTOMERS')")
+    @PreAuthorize("hasRole('CUSTOMERS')")
     public List<Order> orders() {
         return orderRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    // @PreAuthorize("hasRole('CUSTOMERS')")
+    @PreAuthorize("hasRole('CUSTOMERS')")
     public Order getOrderById(
         @PathVariable UUID id
     ) {
@@ -53,15 +57,22 @@ public class OrderController {
     }
 
     @PostMapping
-    // @PreAuthorize("hasRole('CUSTOMERS')")
+    @PreAuthorize("hasRole('CUSTOMERS')")
     public Order createOrder(
-        @RequestBody List<CreateOrderRequest> request
+        @RequestBody List<CreateOrderRequest> request,
+        @AuthenticationPrincipal Jwt jwt
     ) {
+        
         List<UUID> productIds = request.stream()
             .map(CreateOrderRequest::productId)
             .toList();
+
         List<ProductResponse> products = catalogClient.getProductsByIds(productIds);
-        Order order = Order.create(UUID.randomUUID().toString());
+        
+        Order order = Order.create(
+            jwt.getClaims().get("sub").toString()
+        );
+        
         for (ProductResponse product : products) {
 
             Integer quantity = request.stream()

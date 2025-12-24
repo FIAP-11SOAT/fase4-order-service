@@ -29,7 +29,7 @@ import lombok.Setter;
 @Table(name = "orders")
 @Getter
 @Setter
-@JsonPropertyOrder({"id", "orderDate", "customerId", "status", "totalAmount", "paymentId", "items", "createdAt", "updatedAt"})
+@JsonPropertyOrder({"id", "orderDate", "customerId", "status", "statusEvent", "totalAmount", "paymentId", "items", "statusEvents", "createdAt", "updatedAt"})
 public class Order {
 
     @Id
@@ -46,13 +46,14 @@ public class Order {
     @Column(name = "customer_id", length = 255)
     private String customerId;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status = OrderStatus.RECEBIDO;
+    private OrderStatusEnum status = OrderStatusEnum.RECEBIDO;
 
-    @Column(name = "status_event", length = 50)
+    @JsonProperty("status_event")
+    @Column(name = "status_event")
     @Enumerated(EnumType.STRING)
-    private OrderStatusEvent statusEvent;
+    private OrderStatusEventEnum statusEvent = OrderStatusEventEnum.ORDER_CREATED;
 
     @JsonProperty("total_amount")
     @Column(name = "total_amount", nullable = false, precision = 12, scale = 2)
@@ -75,15 +76,39 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
+    @JsonProperty("status_events")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderStatusEvent> statusEvents = new ArrayList<>();
+
     public static Order create(String customerId) {
         Order order = new Order();
         order.setCustomerId(customerId);
+        order.setStatus(OrderStatusEnum.RECEBIDO);
+        order.setStatusEvent(OrderStatusEventEnum.ORDER_CREATED);
+        
+        OrderStatusEvent initialEvent = OrderStatusEvent.create(
+            OrderStatusEventEnum.ORDER_CREATED, 
+            "Pedido criado e recebido"
+        );
+        order.addStatusEvent(initialEvent);
+        
         return order;
     }
 
     public void addItem(OrderItem item) {
         items.add(item);
         item.setOrder(this);
+    }
+
+    public void updateStatusEvent(OrderStatusEventEnum eventType, String description) {
+        this.statusEvent = eventType;
+        OrderStatusEvent statusEvent = OrderStatusEvent.create(eventType, description);
+        this.addStatusEvent(statusEvent);
+    }
+
+    public void addStatusEvent(OrderStatusEvent event) {
+        statusEvents.add(event);
+        event.setOrder(this);
     }
 
     public void calculateTotalAmount() {

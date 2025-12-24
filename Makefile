@@ -1,4 +1,4 @@
-.PHONY: start stop restart catalog-service build run clean test
+.PHONY: start stop restart migrate catalog-service build run clean test install
 
 start:
 	docker compose up -d

@@ -15,7 +15,7 @@ locals {
     "spring.datasource.username"          = "default"
     "spring.datasource.password"          = "default"
     "spring.datasource.driver-class-name" = "org.postgresql.Driver"
-    "fase4.order.service.apigateway.url"  = "http://localhost:8080",
+    "fase4.order.service.apigateway.url"  = "http://localhost:3000",
     "fase4.order.service.auth.jwk"        = local.aws_infra_secrets["JWT_JWK"]
   }
   prod_secrets = {
