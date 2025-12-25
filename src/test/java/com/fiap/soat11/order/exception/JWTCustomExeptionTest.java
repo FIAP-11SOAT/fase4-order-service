@@ -17,8 +17,10 @@ class JWTCustomExeptionTest {
 
     @Test
     void testExceptionCanBeThrown() {
+        JWTCustomExeption exception = new JWTCustomExeption("Test error", new Exception("Cause"));
+        
         assertThrows(JWTCustomExeption.class, () -> {
-            throw new JWTCustomExeption("Test error", new Exception("Cause"));
+            throw exception;
         });
     }
 }
