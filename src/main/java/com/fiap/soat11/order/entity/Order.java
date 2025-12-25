@@ -102,8 +102,8 @@ public class Order {
 
     public void updateStatusEvent(OrderStatusEventEnum eventType, String description) {
         this.statusEvent = eventType;
-        OrderStatusEvent statusEvent = OrderStatusEvent.create(eventType, description);
-        this.addStatusEvent(statusEvent);
+        OrderStatusEvent newStatusEvent = OrderStatusEvent.create(eventType, description);
+        this.addStatusEvent(newStatusEvent);
     }
 
     public void addStatusEvent(OrderStatusEvent event) {

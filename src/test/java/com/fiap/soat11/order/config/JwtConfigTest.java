@@ -36,8 +36,9 @@ class JwtConfigTest {
             field.setAccessible(true);
             field.set(config, "invalid-jwk");
             
-            assertThrows(JWTCustomExeption.class, config::jwtDecoder,
-                "Should throw JWTCustomExeption for invalid JWK");
+            assertThrows(JWTCustomExeption.class, () -> {
+                config.jwtDecoder();
+            }, "Should throw JWTCustomExeption for invalid JWK");
         } catch (NoSuchFieldException | IllegalAccessException e) {
             fail("Test setup failed: " + e.getMessage());
         }
@@ -52,8 +53,9 @@ class JwtConfigTest {
             field.setAccessible(true);
             field.set(config, "");
             
-            assertThrows(JWTCustomExeption.class, config::jwtDecoder,
-                "Should throw JWTCustomExeption for empty JWK");
+            assertThrows(JWTCustomExeption.class, () -> {
+                config.jwtDecoder();
+            }, "Should throw JWTCustomExeption for empty JWK");
         } catch (NoSuchFieldException | IllegalAccessException e) {
             fail("Test setup failed: " + e.getMessage());
         }
