@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
+import com.fiap.soat11.order.exception.JWTCustomExeption;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
 
@@ -26,7 +27,7 @@ public class JwtConfig {
             return NimbusJwtDecoder.withPublicKey(publicKey).build();
 
         } catch (Exception e) {
-            throw new RuntimeException("Falha ao carregar ou parsear a chave pública JWK", e);
+            throw new JWTCustomExeption("Falha ao carregar ou parsear a chave pública JWK", e);
         }
     }
 }

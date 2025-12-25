@@ -286,4 +286,71 @@ class OrderServiceTest {
         assertFalse(result.getStatusEvents().isEmpty());
         verify(orderRepository, times(1)).save(any(Order.class));
     }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando CatalogClient falha")
+    void testCreateOrder_CatalogClientFailure() {
+        // Arrange
+        CreateOrderRequest request = new CreateOrderRequest(productId1, 1);
+        List<CreateOrderRequest> requests = Arrays.asList(request);
+
+        when(catalogClient.getProductsByIds(anyList())).thenThrow(new RuntimeException("Catalog service unavailable"));
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> {
+            orderService.createOrder(requests, userId);
+        });
+
+        verify(orderRepository, never()).save(any(Order.class));
+    }
+
+    @Test
+    @DisplayName("Deve criar pedido com lista vazia de produtos retornada pelo catálogo")
+    void testCreateOrder_EmptyProductList() {
+        // Arrange
+        CreateOrderRequest request = new CreateOrderRequest(productId1, 1);
+        List<CreateOrderRequest> requests = Arrays.asList(request);
+
+        when(catalogClient.getProductsByIds(anyList())).thenReturn(Arrays.asList());
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Order result = orderService.createOrder(requests, userId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(0, result.getItems().size());
+        assertEquals(BigDecimal.ZERO, result.getTotalAmount());
+        verify(orderRepository, times(1)).save(any(Order.class));
+    }
+
+    @Test
+    @DisplayName("Deve lidar com valores decimais no cálculo do total")
+    void testCreateOrder_DecimalCalculation() {
+        // Arrange
+        CreateOrderRequest request = new CreateOrderRequest(productId1, 3);
+        List<CreateOrderRequest> requests = Arrays.asList(request);
+
+        ProductResponse product = new ProductResponse(
+            productId1,
+            "Produto",
+            "Descrição",
+            new BigDecimal("33.33"),
+            "image.jpg",
+            10,
+            UUID.randomUUID(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now()
+        );
+
+        when(catalogClient.getProductsByIds(anyList())).thenReturn(Arrays.asList(product));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Order result = orderService.createOrder(requests, userId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(new BigDecimal("99.99"), result.getTotalAmount());
+    }
 }
