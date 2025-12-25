@@ -25,6 +25,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @SuppressWarnings("java:S4502") // CSRF protection disabled safely for stateless JWT-based REST API
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .authorizeHttpRequests(auth -> auth
@@ -45,6 +46,9 @@ public class SecurityConfig {
                             new ObjectMapper().writeValue(response.getOutputStream(), errorResponse);
                         })
                 )
+                // CSRF protection is disabled because this is a stateless REST API using JWT tokens.
+                // CSRF attacks are only relevant for session-based authentication with cookies.
+                // JWT tokens are sent in the Authorization header and are not susceptible to CSRF attacks.
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS));
 
