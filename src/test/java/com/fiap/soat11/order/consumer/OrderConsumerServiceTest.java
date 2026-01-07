@@ -9,6 +9,7 @@ import com.fiap.soat11.order.entity.Order;
 import com.fiap.soat11.order.entity.OrderStatusEnum;
 import com.fiap.soat11.order.entity.OrderStatusEventEnum;
 import com.fiap.soat11.order.exception.InvalidStatusTransitionException;
+import com.fiap.soat11.order.exception.OrderConsumerException;
 import com.fiap.soat11.order.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -272,11 +273,61 @@ class OrderConsumerServiceTest {
         when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        OrderConsumerException exception = assertThrows(OrderConsumerException.class, () -> {
             orderConsumerService.handler(data);
         });
 
         assertTrue(exception.getMessage().contains("Order not found"));
+        verify(orderRepository, never()).save(any(Order.class));
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando tipo de evento for desconhecido")
+    void testHandler_UnknownEventType() {
+        // Arrange
+        ConsumerMeta meta = new ConsumerMeta(
+            UUID.randomUUID().toString(),
+            "2024-12-24T10:00:00Z",
+            "payment-service",
+            "order-service",
+            "unknown-event-type"
+        );
+        ConsumerPaymentData paymentData = new ConsumerPaymentData(orderId, UUID.randomUUID());
+        ConsumerPayload payload = new ConsumerPayload(null, paymentData);
+        ConsumerData data = new ConsumerData(meta, payload);
+        
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+
+        // Act & Assert
+        OrderConsumerException exception = assertThrows(OrderConsumerException.class, () -> {
+            orderConsumerService.handler(data);
+        });
+
+        assertTrue(exception.getMessage().contains("Unknown event type"));
+        verify(orderRepository, never()).save(any(Order.class));
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando payload não contém order ID")
+    void testHandler_MissingOrderId() {
+        // Arrange
+        ConsumerMeta meta = new ConsumerMeta(
+            UUID.randomUUID().toString(),
+            "2024-12-24T10:00:00Z",
+            "payment-service",
+            "order-service",
+            "payment-created-event"
+        );
+        ConsumerPayload payload = new ConsumerPayload(null, null);
+        ConsumerData data = new ConsumerData(meta, payload);
+
+        // Act & Assert
+        OrderConsumerException exception = assertThrows(OrderConsumerException.class, () -> {
+            orderConsumerService.handler(data);
+        });
+
+        assertTrue(exception.getMessage().contains("Order ID is missing"));
+        verify(orderRepository, never()).findById(any());
         verify(orderRepository, never()).save(any(Order.class));
     }
 

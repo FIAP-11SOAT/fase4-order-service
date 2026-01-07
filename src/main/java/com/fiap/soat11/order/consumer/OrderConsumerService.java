@@ -12,6 +12,7 @@ import com.fiap.soat11.order.entity.Order;
 import com.fiap.soat11.order.entity.OrderStatusEnum;
 import com.fiap.soat11.order.entity.OrderStatusEventEnum;
 import com.fiap.soat11.order.exception.InvalidStatusTransitionException;
+import com.fiap.soat11.order.exception.OrderConsumerException;
 import com.fiap.soat11.order.repository.OrderRepository;
 
 @Service
@@ -29,7 +30,7 @@ public class OrderConsumerService {
         OrderEventType eventType = OrderEventType.fromEventName(data.meta().eventName());
 
         if (eventType == null) {
-            throw new RuntimeException("Unknown event type: " + data.meta().eventName());
+            throw new OrderConsumerException("Unknown event type: " + data.meta().eventName());
         }
         
         final UUID orderID;
@@ -39,11 +40,11 @@ public class OrderConsumerService {
         } else if (data.payload().payment() != null) {
             orderID = data.payload().payment().orderID();
         } else {
-            throw new RuntimeException("Order ID is missing in the payload.");
+            throw new OrderConsumerException("Order ID is missing in the payload.");
         }
 
         Order order = orderRepository.findById(orderID)
-                .orElseThrow(() -> new RuntimeException("Order not found: " + orderID));
+                .orElseThrow(() -> new OrderConsumerException("Order not found: " + orderID));
 
         switch (eventType) {
             case PAYMENT_CREATED:
@@ -56,13 +57,13 @@ public class OrderConsumerService {
                 this.handlerPaymentFailed(order, data);
                 break;
             case PRODUCTION_STARTED:
-                this.handlerProductionStarted(order, data);
+                this.handlerProductionStarted(order);
                 break;
             case PRODUCTION_COMPLETED:
-                this.handlerProductionCompleted(order, data);
+                this.handlerProductionCompleted(order);
                 break;
             case PRODUCTION_DELIVERED:
-                this.handlerProductionDelivered(order, data);
+                this.handlerProductionDelivered(order);
                 break;
         }
 
@@ -113,7 +114,6 @@ public class OrderConsumerService {
                 Arrays.asList(OrderStatusEventEnum.AWAITING_PAYMENT)
         );
 
-        // Atualiza o payment ID do pedido caso ainda não tenha sido atualizado
         if (data.payload().payment() != null && data.payload().payment().paymentID() != null) {
             order.setPaymentId(data.payload().payment().paymentID().toString());
         }
@@ -126,7 +126,7 @@ public class OrderConsumerService {
                 "Pedido cancelado devido à falha no pagamento.");
     }
 
-    void handlerProductionStarted(Order order, ConsumerData data) {
+    void handlerProductionStarted(Order order) {
         validateStatusTransition(
                 order.getStatusEvent(),
                 OrderStatusEventEnum.PREPARATION_IN_PROGRESS,
@@ -139,7 +139,7 @@ public class OrderConsumerService {
                 "Preparação do pedido iniciada.");
     }
 
-    void handlerProductionCompleted(Order order, ConsumerData data) {
+    void handlerProductionCompleted(Order order) {
         validateStatusTransition(
                 order.getStatusEvent(),
                 OrderStatusEventEnum.FOR_DELIVERY,
@@ -153,7 +153,7 @@ public class OrderConsumerService {
 
     }
 
-    void handlerProductionDelivered(Order order, ConsumerData data) {
+    void handlerProductionDelivered(Order order) {
         order.setStatus(OrderStatusEnum.ENTREGUE);
         order.updateStatusEvent(
             OrderStatusEventEnum.DELIVERED,
