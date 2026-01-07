@@ -14,15 +14,19 @@ import com.fiap.soat11.order.entity.OrderStatusEventEnum;
 import com.fiap.soat11.order.exception.InvalidStatusTransitionException;
 import com.fiap.soat11.order.exception.OrderConsumerException;
 import com.fiap.soat11.order.repository.OrderRepository;
+import com.fiap.soat11.order.service.ProductionQueueService;
 
 @Service
 public class OrderConsumerService {
 
     private OrderRepository orderRepository;
+    private ProductionQueueService productionQueueService;
 
     public OrderConsumerService(
-            OrderRepository orderRepository) {
+            OrderRepository orderRepository,
+            ProductionQueueService productionQueueService) {
         this.orderRepository = orderRepository;
+        this.productionQueueService = productionQueueService;
     }
 
     @Transactional
@@ -109,6 +113,9 @@ public class OrderConsumerService {
         order.updateStatusEvent(
                 OrderStatusEventEnum.AWAITING_PREPARATION,
                 "Pedido aguardando início da preparação.");
+        
+        // Envia mensagem para a fila do production-service
+        productionQueueService.sendOrderPaidEvent(order);
     }
 
     void handlerPaymentFailed(Order order, ConsumerData data) {
