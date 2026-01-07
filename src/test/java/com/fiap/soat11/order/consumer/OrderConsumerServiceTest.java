@@ -3,6 +3,8 @@ package com.fiap.soat11.order.consumer;
 import com.fiap.soat11.order.dto.ConsumerData;
 import com.fiap.soat11.order.dto.ConsumerMeta;
 import com.fiap.soat11.order.dto.ConsumerPayload;
+import com.fiap.soat11.order.dto.ConsumerProductionData;
+import com.fiap.soat11.order.dto.ConsumerPaymentData;
 import com.fiap.soat11.order.entity.Order;
 import com.fiap.soat11.order.entity.OrderStatusEnum;
 import com.fiap.soat11.order.entity.OrderStatusEventEnum;
@@ -51,7 +53,18 @@ class OrderConsumerServiceTest {
             "order-service",
             eventName
         );
-        ConsumerPayload payload = new ConsumerPayload(orderId);
+        
+        ConsumerPayload payload;
+        // Eventos de pagamento usam payment data
+        if (eventName.contains("payment")) {
+            ConsumerPaymentData paymentData = new ConsumerPaymentData(orderId, UUID.randomUUID());
+            payload = new ConsumerPayload(null, paymentData);
+        } else {
+            // Eventos de produção usam production data
+            ConsumerProductionData productionData = new ConsumerProductionData(orderId);
+            payload = new ConsumerPayload(productionData, null);
+        }
+        
         return new ConsumerData(meta, payload);
     }
 
