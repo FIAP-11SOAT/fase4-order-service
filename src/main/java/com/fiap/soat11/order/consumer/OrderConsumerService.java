@@ -2,6 +2,7 @@ package com.fiap.soat11.order.consumer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,22 @@ public class OrderConsumerService {
     public void handler(ConsumerData data) {
         OrderEventType eventType = OrderEventType.fromEventName(data.meta().eventName());
 
-        Order order = orderRepository.findById(data.payload().orderID())
-                .orElseThrow(() -> new RuntimeException("Order not found: " + data.payload().orderID()));
+        if (eventType == null) {
+            throw new RuntimeException("Unknown event type: " + data.meta().eventName());
+        }
+        
+        final UUID orderID;
+
+        if (data.payload().production() != null) {
+            orderID = data.payload().production().orderID();
+        } else if (data.payload().payment() != null) {
+            orderID = data.payload().payment().orderID();
+        } else {
+            throw new RuntimeException("Order ID is missing in the payload.");
+        }
+
+        Order order = orderRepository.findById(orderID)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderID));
 
         switch (eventType) {
             case PAYMENT_CREATED:
@@ -61,6 +76,11 @@ public class OrderConsumerService {
                 Arrays.asList(OrderStatusEventEnum.ORDER_CREATED)
         );
 
+        // Atualiza o payment ID do pedido
+        if (data.payload().payment() != null && data.payload().payment().paymentID() != null) {
+            order.setPaymentId(data.payload().payment().paymentID().toString());
+        }
+
         order.updateStatusEvent(
                 OrderStatusEventEnum.AWAITING_PAYMENT,
                 "Pagamento criado e aguardando confirmação.");
@@ -72,6 +92,11 @@ public class OrderConsumerService {
                 OrderStatusEventEnum.PAYMENT_APPROVED,
                 Arrays.asList(OrderStatusEventEnum.AWAITING_PAYMENT)
         );
+
+        // Atualiza o payment ID do pedido caso ainda não tenha sido atualizado
+        if (data.payload().payment() != null && data.payload().payment().paymentID() != null) {
+            order.setPaymentId(data.payload().payment().paymentID().toString());
+        }
 
         order.updateStatusEvent(
                 OrderStatusEventEnum.PAYMENT_APPROVED,
@@ -87,6 +112,11 @@ public class OrderConsumerService {
                 OrderStatusEventEnum.PAYMENT_FAILED,
                 Arrays.asList(OrderStatusEventEnum.AWAITING_PAYMENT)
         );
+
+        // Atualiza o payment ID do pedido caso ainda não tenha sido atualizado
+        if (data.payload().payment() != null && data.payload().payment().paymentID() != null) {
+            order.setPaymentId(data.payload().payment().paymentID().toString());
+        }
 
         order.updateStatusEvent(
                 OrderStatusEventEnum.PAYMENT_FAILED,

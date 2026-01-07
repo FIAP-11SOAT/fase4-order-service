@@ -99,7 +99,7 @@ public class Order {
         items.add(item);
         item.setOrder(this);
     }
-
+    
     public void updateStatusEvent(OrderStatusEventEnum eventType, String description) {
         this.statusEvent = eventType;
         OrderStatusEvent newStatusEvent = OrderStatusEvent.create(eventType, description);
