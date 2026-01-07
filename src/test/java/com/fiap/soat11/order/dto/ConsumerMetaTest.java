@@ -54,7 +54,7 @@ class ConsumerMetaTest {
     @Test
     void shouldDeserializeFromJson() throws Exception {
         // Arrange
-        String json = "{\"event_id\":\"event-789\",\"event_type\":\"2024-12-25T12:00:00Z\",\"event_source\":\"payment-service\",\"event_target\":\"order-service\",\"event_name\":\"payment.failed\"}";
+        String json = "{\"event_id\":\"event-789\",\"event_date\":\"2024-12-25T12:00:00Z\",\"event_source\":\"payment-service\",\"event_target\":\"order-service\",\"event_name\":\"payment.failed\"}";
 
         // Act
         ConsumerMeta meta = objectMapper.readValue(json, ConsumerMeta.class);

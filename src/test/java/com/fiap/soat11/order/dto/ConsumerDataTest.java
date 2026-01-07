@@ -120,7 +120,7 @@ class ConsumerDataTest {
     @Test
     void shouldDeserializeFromJsonWithProduction() throws Exception {
         // Arrange
-        String json = "{\"meta\":{\"event_id\":\"event-111\",\"event_type\":\"2024-12-25T14:00:00Z\",\"event_source\":\"production-service\",\"event_target\":\"order-service\",\"event_name\":\"production.started\"},\"payload\":{\"production\":{\"order_id\":\"123e4567-e89b-12d3-a456-426614174000\"},\"payment\":null}}";
+        String json = "{\"meta\":{\"event_id\":\"event-111\",\"event_date\":\"2024-12-25T14:00:00Z\",\"event_source\":\"production-service\",\"event_target\":\"order-service\",\"event_name\":\"production.started\"},\"payload\":{\"production\":{\"order_id\":\"123e4567-e89b-12d3-a456-426614174000\"},\"payment\":null}}";
 
         // Act
         ConsumerData data = objectMapper.readValue(json, ConsumerData.class);
@@ -137,7 +137,7 @@ class ConsumerDataTest {
     @Test
     void shouldDeserializeFromJsonWithPayment() throws Exception {
         // Arrange
-        String json = "{\"meta\":{\"event_id\":\"event-222\",\"event_type\":\"2024-12-25T15:00:00Z\",\"event_source\":\"payment-service\",\"event_target\":\"order-service\",\"event_name\":\"payment.completed\"},\"payload\":{\"production\":null,\"payment\":{\"order_id\":\"123e4567-e89b-12d3-a456-426614174000\",\"payment_id\":\"987e6543-e89b-12d3-a456-426614174000\"}}}";
+        String json = "{\"meta\":{\"event_id\":\"event-222\",\"event_date\":\"2024-12-25T15:00:00Z\",\"event_source\":\"payment-service\",\"event_target\":\"order-service\",\"event_name\":\"payment.completed\"},\"payload\":{\"production\":null,\"payment\":{\"order_id\":\"123e4567-e89b-12d3-a456-426614174000\",\"payment_id\":\"987e6543-e89b-12d3-a456-426614174000\"}}}";
 
         // Act
         ConsumerData data = objectMapper.readValue(json, ConsumerData.class);
