@@ -159,7 +159,7 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Order result = orderService.createOrder(requests, userId);
+        Order result = orderService.createOrder(requests, userId, userId);
 
         // Assert
         assertNotNull(result);
@@ -200,7 +200,7 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Order result = orderService.createOrder(requests, userId);
+        Order result = orderService.createOrder(requests, userId, userId);
 
         // Assert
         assertNotNull(result);
@@ -246,7 +246,7 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Order result = orderService.createOrder(requests, userId);
+        Order result = orderService.createOrder(requests, userId, userId);
 
         // Assert
         assertNotNull(result);
@@ -277,7 +277,7 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Order result = orderService.createOrder(requests, userId);
+        Order result = orderService.createOrder(requests, userId, userId);
 
         // Assert
         assertNotNull(result);
@@ -298,7 +298,7 @@ class OrderServiceTest {
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> {
-            orderService.createOrder(requests, userId);
+            orderService.createOrder(requests, userId, userId);
         });
 
         verify(orderRepository, never()).save(any(Order.class));
@@ -315,7 +315,7 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Order result = orderService.createOrder(requests, userId);
+        Order result = orderService.createOrder(requests, userId, userId);
 
         // Assert
         assertNotNull(result);
@@ -347,7 +347,7 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        Order result = orderService.createOrder(requests, userId);
+        Order result = orderService.createOrder(requests, userId, userId);
 
         // Assert
         assertNotNull(result);

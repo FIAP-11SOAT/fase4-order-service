@@ -27,6 +27,10 @@ public class OrderConsumerService {
 
     @Transactional
     public void handler(ConsumerData data) {
+
+        System.out.println("Received event: " + data.meta().eventName());
+        System.out.println("Payload: " + data.payload().toString());
+
         OrderEventType eventType = OrderEventType.fromEventName(data.meta().eventName());
 
         if (eventType == null) {
