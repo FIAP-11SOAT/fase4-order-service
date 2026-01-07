@@ -45,7 +45,7 @@ class ConsumerMetaTest {
         // Assert
         assertTrue(json.contains("event_id"));
         assertTrue(json.contains("event-456"));
-        assertTrue(json.contains("event_type"));
+        assertTrue(json.contains("event_date"));
         assertTrue(json.contains("event_source"));
         assertTrue(json.contains("event_target"));
         assertTrue(json.contains("event_name"));

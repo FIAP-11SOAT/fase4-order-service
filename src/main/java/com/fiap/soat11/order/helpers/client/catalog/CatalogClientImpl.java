@@ -42,8 +42,7 @@ public class CatalogClientImpl implements CatalogClient {
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<List<ProductResponse>>() {
-                });
+                new ParameterizedTypeReference<List<ProductResponse>>() {});
 
         return response.getBody();
     }

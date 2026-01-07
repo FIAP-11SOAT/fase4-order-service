@@ -6,7 +6,7 @@ public record ConsumerMeta(
     @JsonProperty("event_id")
     String eventId,
 
-    @JsonProperty("event_type")
+    @JsonProperty("event_date")
     String eventDate,
     
     @JsonProperty("event_source")
