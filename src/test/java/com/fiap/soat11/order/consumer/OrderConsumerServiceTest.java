@@ -11,6 +11,7 @@ import com.fiap.soat11.order.entity.OrderStatusEventEnum;
 import com.fiap.soat11.order.exception.InvalidStatusTransitionException;
 import com.fiap.soat11.order.exception.OrderConsumerException;
 import com.fiap.soat11.order.repository.OrderRepository;
+import com.fiap.soat11.order.service.ProductionQueueService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,9 @@ class OrderConsumerServiceTest {
 
     @Mock
     private OrderRepository orderRepository;
+
+    @Mock
+    private ProductionQueueService productionQueueService;
 
     @InjectMocks
     private OrderConsumerService orderConsumerService;
@@ -295,8 +299,6 @@ class OrderConsumerServiceTest {
         ConsumerPaymentData paymentData = new ConsumerPaymentData(orderId, UUID.randomUUID());
         ConsumerPayload payload = new ConsumerPayload(null, paymentData);
         ConsumerData data = new ConsumerData(meta, payload);
-        
-        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
         // Act & Assert
         OrderConsumerException exception = assertThrows(OrderConsumerException.class, () -> {

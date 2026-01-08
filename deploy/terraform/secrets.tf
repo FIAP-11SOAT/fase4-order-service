@@ -22,7 +22,7 @@ resource "aws_secretsmanager_secret_version" "secrets" {
     "spring.datasource.url"               = "jdbc:postgresql://${local.RDS_HOST}:5432/${local.RDS_DB}?sslmode=require"
     "spring.datasource.username"          = local.RDS_USER
     "spring.datasource.password"          = local.RDS_PASS
-    "spring.datasource.driver-class-name" = "org.postgresql.Driver"
+    "spring.datasource.driver-class-name" = "org.postgresql.Driver" 
     "fase4.order.service.apigateway.url"  = trimsuffix(local.aws_infra_secrets["GTW_ENDPOINT"], "/")
     "fase4.order.service.auth.jwk"        = local.aws_infra_secrets["JWT_JWK"]
   })

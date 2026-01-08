@@ -1,5 +1,6 @@
 package com.fiap.soat11.order.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.soat11.order.dto.CreateOrderRequest;
 import com.fiap.soat11.order.entity.Order;
 import com.fiap.soat11.order.entity.OrderStatusEnum;
@@ -7,6 +8,7 @@ import com.fiap.soat11.order.entity.OrderStatusEventEnum;
 import com.fiap.soat11.order.helpers.client.catalog.CatalogClient;
 import com.fiap.soat11.order.helpers.client.catalog.schemas.ProductResponse;
 import com.fiap.soat11.order.repository.OrderRepository;
+import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,12 @@ class OrderServiceTest {
 
     @Mock
     private CatalogClient catalogClient;
+
+    @Mock
+    private SqsTemplate sqsTemplate;
+
+    @Mock
+    private ObjectMapper objectMapper;
 
     @InjectMocks
     private OrderService orderService;

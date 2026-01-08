@@ -35,7 +35,12 @@ public class OrderConsumerService {
         System.out.println("Received event: " + data.meta().eventName());
         System.out.println("Payload: " + data.payload().toString());
 
-        OrderEventType eventType = OrderEventType.fromEventName(data.meta().eventName());
+        OrderEventType eventType;
+        try {
+            eventType = OrderEventType.fromEventName(data.meta().eventName());
+        } catch (IllegalArgumentException e) {
+            throw new OrderConsumerException("Unknown event type: " + data.meta().eventName());
+        }
 
         if (eventType == null) {
             throw new OrderConsumerException("Unknown event type: " + data.meta().eventName());
