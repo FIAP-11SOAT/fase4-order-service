@@ -19,7 +19,7 @@ import com.fiap.soat11.order.service.OrderService;
 
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/order")
 public class OrderController {
 
     private final OrderService orderService;

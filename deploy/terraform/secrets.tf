@@ -10,26 +10,20 @@ resource "aws_secretsmanager_secret" "secrets" {
 
 
 locals {
-  dev_secrets = {
-    "spring.datasource.url"               = "jdbc:postgresql://localhost:5432/default"
-    "spring.datasource.username"          = "default"
-    "spring.datasource.password"          = "default"
-    "spring.datasource.driver-class-name" = "org.postgresql.Driver"
-    "fase4.order.service.apigateway.url"  = "http://localhost:3000",
-    "fase4.order.service.auth.jwk"        = local.aws_infra_secrets["JWT_JWK"]
-  }
-  prod_secrets = {
-    "spring.datasource.url"               = "jdbc:postgresql://prod-db-host:5432/prod_db"
-    "spring.datasource.username"          = "prod_user"
-    "spring.datasource.password"          = "prod_password"
-    "spring.datasource.driver-class-name" = "org.postgresql.Driver"
-    "fase4.order.service.apigateway.url"  = "https://api.fase4.com"
-    "fase4.order.service.auth.jwk"        = local.aws_infra_secrets["JWT_JWK"]
-  }
+  RDS_HOST = local.aws_infra_secrets["RDS_HOST"]
+  RDS_DB   = postgresql_database.app_db.name
+  RDS_USER = postgresql_role.app_db_user.name
+  RDS_PASS = random_password.app_db_password.result
 }
 
-
 resource "aws_secretsmanager_secret_version" "secrets" {
-  secret_id     = aws_secretsmanager_secret.secrets.id
-  secret_string = jsonencode(var.environment == "prod" ? local.prod_secrets : local.dev_secrets)
+  secret_id = aws_secretsmanager_secret.secrets.id
+  secret_string = jsonencode({
+    "spring.datasource.url"               = "jdbc:postgresql://${local.RDS_HOST}:5432/${local.RDS_DB}?sslmode=require"
+    "spring.datasource.username"          = local.RDS_USER
+    "spring.datasource.password"          = local.RDS_PASS
+    "spring.datasource.driver-class-name" = "org.postgresql.Driver"
+    "fase4.order.service.apigateway.url"  = trimsuffix(local.aws_infra_secrets["GTW_ENDPOINT"], "/")
+    "fase4.order.service.auth.jwk"        = local.aws_infra_secrets["JWT_JWK"]
+  })
 }

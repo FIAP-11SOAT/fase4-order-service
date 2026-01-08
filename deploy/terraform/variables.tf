@@ -27,12 +27,3 @@ locals {
   aws_region   = "us-east-1"
   project_name = "fase4-order-service"
 }
-
-variable "environment" {
-  description = "The deployment environment (dev, prod)"
-  type        = string
-  validation {
-    condition     = contains(["dev", "prod"], var.environment)
-    error_message = "Environment must be one of 'dev' or 'prod'."
-  }
-}
