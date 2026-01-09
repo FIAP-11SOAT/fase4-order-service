@@ -37,7 +37,7 @@ public class OrderConsumerService {
     public void handler(ConsumerData data) {
 
         logger.info("Received event: {}", data.meta().eventName());
-        logger.info("Payload: {}", data.payload().toString());
+        logger.info("Payload: {}", data.payload());
 
         OrderEventType eventType;
         try {
