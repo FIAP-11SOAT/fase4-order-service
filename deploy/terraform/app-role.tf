@@ -56,8 +56,8 @@ data "aws_iam_policy_document" "document_ecs_task_role" {
       "sqs:GetQueueUrl"
     ]
     resources = [
-      "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fase4-payment-service-queue",
-      "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fase4-production-service-queue"
+      "arn:aws:sqs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:fase4-payment-service-queue",
+      "arn:aws:sqs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:fase4-production-service-queue"
     ]
   }
 }
