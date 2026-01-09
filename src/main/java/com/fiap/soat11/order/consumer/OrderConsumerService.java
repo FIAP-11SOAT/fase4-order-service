@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,8 @@ import com.fiap.soat11.order.service.ProductionQueueService;
 @Service
 public class OrderConsumerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(OrderConsumerService.class);
+
     private OrderRepository orderRepository;
     private ProductionQueueService productionQueueService;
 
@@ -32,8 +36,8 @@ public class OrderConsumerService {
     @Transactional
     public void handler(ConsumerData data) {
 
-        System.out.println("Received event: " + data.meta().eventName());
-        System.out.println("Payload: " + data.payload().toString());
+        logger.info("Received event: {}", data.meta().eventName());
+        logger.info("Payload: {}", data.payload().toString());
 
         OrderEventType eventType;
         try {
